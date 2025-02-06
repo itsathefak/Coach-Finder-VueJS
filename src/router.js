@@ -13,7 +13,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/', redirect: '/coaches' },
-    { path: 'coaches', component: CoachList },
+    { path: '/coaches', component: CoachList },
     {
       path: '/coaches/:id',
       component: CoachDetails,
@@ -21,7 +21,7 @@ const router = createRouter({
         { path: 'contact', component: ContactCoach }, //coaches/c1/contact
       ],
     },
-    { path: 'register', component: CoachRegistration },
+    { path: '/register', component: CoachRegistration },
     { path: '/request', component: RequestsReceived },
     { path: '/:notFound(.*)', component: NotFound },
   ],
