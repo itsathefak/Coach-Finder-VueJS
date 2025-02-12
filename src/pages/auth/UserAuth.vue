@@ -31,6 +31,7 @@
 <script>
 import BaseDialog from '../../components/UI/BaseDialog.vue';
 import BaseSpinner from '../../components/UI/BaseSpinner.vue';
+import coaches from '../../store/modules/coaches';
 
 export default {
   components: { BaseDialog, BaseSpinner },
@@ -85,6 +86,8 @@ export default {
               this.formIsValid = false;
             });
         }
+        const redirectUrl = '/' + (this.$route.query.redirect || coaches)
+        this.$router.replace(redirectUrl);
       } catch (err) {
         console.error('Unexpected Error:', err);
         this.error = err.message || 'Failed to authenticate, try later';
