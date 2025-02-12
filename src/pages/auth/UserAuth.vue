@@ -9,11 +9,11 @@
         <label for="password">Password</label>
         <input type="password" id="password" v-model.trim="password" />
       </div>
-      <p v-if="formIsValid">Please enter a valid email or password</p>
+      <p v-if="!formIsValid" style="color: red;">Please enter a valid email or password</p>
       <base-button>{{ submitButtonCaption }}</base-button>
-      <base-button type="button" mode="flat" @click="switchAuthMode"
-        >{{ switchModeButtonCaption }}</base-button
-      >
+      <base-button type="button" mode="flat" @click="switchAuthMode">{{
+        switchModeButtonCaption
+      }}</base-button>
     </form>
   </base-card>
 </template>
@@ -46,16 +46,30 @@ export default {
   },
   methods: {
     submitForm() {
-      this.formIsValid = true;
-      if (
-        this.email === ' ' ||
-        !this.email.include('@') ||
-        this.password.length < 6
-      ) {
-        this.formIsValid = false;
-        return;
-      }
-    },
+  this.formIsValid = true;
+
+  if (
+    this.email.trim() === '' || 
+    !this.email.includes('@') || 
+    this.password.length < 6
+  ) {
+    this.formIsValid = false;
+    return;
+  }
+
+  if (this.mode === 'login') {
+    // Login logic here...
+  } else {
+    this.$store.dispatch('signup', {
+      email: this.email,
+      password: this.password
+    }).catch(error => {
+      console.error('Signup Error:', error);
+      this.formIsValid = false;  // Update state on failure
+    });
+  }
+}
+,
     switchAuthMode() {
       if (this.mode === 'login') {
         this.mode = 'signup';
